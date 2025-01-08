@@ -8,10 +8,10 @@ class StoreManager: ObservableObject {
     @Published private(set) var purchasedProductIDs = Set<String>()
     
     private let productIDs: Set<String> = [
-        "com.robinnap.Stage-Timer.smallcroissant",
-        "com.robinnap.Stage-Timer.twocroissants",
-        "com.robinnap.Stage-Timer.croissantjam",
-        "com.robinnap.Stage-Timer.breakfast"
+        "com.robinnap.StageTimer.smallcroissant",
+        "com.robinnap.StageTimer.twocroissants",
+        "com.robinnap.StageTimer.croissantjam",
+        "com.robinnap.StageTimer.breakfast"
     ]
     
     private init() {

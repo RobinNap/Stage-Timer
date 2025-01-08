@@ -25,7 +25,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "com.robinnap.Stage-Timer.smallcroissant",
+      "productID" : "com.robinnap.StageTimer.smallcroissant",
       "referenceName" : "Small Croissant",
       "type" : "Consumable"
     },
@@ -40,7 +40,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "com.robinnap.Stage-Timer.twocroissants",
+      "productID" : "com.robinnap.StageTimer.twocroissants",
       "referenceName" : "Two Croissants",
       "type" : "Consumable"
     },
@@ -50,12 +50,12 @@
       "internalID" : "croissant.jam",
       "localizations" : [
         {
-          "description" : "Support the developer",
+          "description" : "Support the developer with a croissant & jam",
           "displayName" : "Croissant & Jam",
           "locale" : "en_US"
         }
       ],
-      "productID" : "com.robinnap.Stage-Timer.croissantjam",
+      "productID" : "com.robinnap.StageTimer.croissantjam",
       "referenceName" : "Croissant & Jam",
       "type" : "Consumable"
     },
@@ -65,12 +65,12 @@
       "internalID" : "breakfast",
       "localizations" : [
         {
-          "description" : "Support the developer",
+          "description" : "Support the developer with breakfast",
           "displayName" : "Breakfast",
           "locale" : "en_US"
         }
       ],
-      "productID" : "com.robinnap.Stage-Timer.breakfast",
+      "productID" : "com.robinnap.StageTimer.breakfast",
       "referenceName" : "Breakfast",
       "type" : "Consumable"
     }

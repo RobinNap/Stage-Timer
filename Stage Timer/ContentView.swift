@@ -853,10 +853,10 @@ struct DonateView: View {
     
     private func getEmojiForProduct(_ productID: String) -> String {
         switch productID {
-        case "com.robinnap.Stage-Timer.smallcroissant": return "🥐"
-        case "com.robinnap.Stage-Timer.twocroissants": return "🥐🥐"
-        case "com.robinnap.Stage-Timer.croissantjam": return "🥐🍓"
-        case "com.robinnap.Stage-Timer.breakfast": return "🥐🥛"
+        case "com.robinnap.StageTimer.smallcroissant": return "🥐"
+        case "com.robinnap.StageTimer.twocroissants": return "🥐🥐"
+        case "com.robinnap.StageTimer.croissantjam": return "🥐🍓"
+        case "com.robinnap.StageTimer.breakfast": return "🥐🥛"
         default: return "🥐"
         }
     }
