@@ -378,6 +378,60 @@ struct TimerSettingsView: View {
                         }
                     }
                 }
+                
+                Section("Manual") {
+                    NavigationLink("Controls") {
+                        ManualDetailView(
+                            title: "Controls",
+                            description: "The large center area is your main control surface.",
+                            items: [
+                                "Tap anywhere on screen to show/hide controls",
+                                "Controls will automatically hide after 5 seconds",
+                                "Settings can be accessed via the gear icon",
+                                "Double tap to reset the timer"
+                            ]
+                        )
+                    }
+                    
+                    NavigationLink("Calendar Integration") {
+                        ManualDetailView(
+                            title: "Calendar Integration",
+                            description: "Sync your schedule with your calendar.",
+                            items: [
+                                "Enable calendar sync to automatically load your schedule",
+                                "Events will automatically start at their scheduled time",
+                                "Calendar sync must be enabled in device settings",
+                                "Events can include images from calendar attachments"
+                            ]
+                        )
+                    }
+                    
+                    NavigationLink("Custom Schedule") {
+                        ManualDetailView(
+                            title: "Custom Schedule",
+                            description: "Create and manage your own event schedule.",
+                            items: [
+                                "Add events with custom names and times",
+                                "Set precise durations for each event",
+                                "Drag to reorder your schedule",
+                                "Use 'Start Now' for immediate timing"
+                            ]
+                        )
+                    }
+                    
+                    NavigationLink("Timer Behavior") {
+                        ManualDetailView(
+                            title: "Timer Behavior",
+                            description: "Understanding how the timer works.",
+                            items: [
+                                "Timer shows remaining time for current event",
+                                "Display turns red under 5 minutes",
+                                "Timer flashes in the final minute",
+                                "Screen stays active during operation"
+                            ]
+                        )
+                    }
+                }
             }
             .navigationTitle("Settings")
             #if os(iOS)
@@ -592,6 +646,46 @@ struct ScheduleEditorView: View {
             return "\(hours)h \(minutes)m"
         } else {
             return "\(minutes)m"
+        }
+    }
+}
+
+struct ManualDetailView: View {
+    let title: String
+    let description: String
+    let items: [String]
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 24) {
+            Text(title)
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding(.bottom, 4)
+            
+            Text(description)
+                .font(.title3)
+                .foregroundStyle(.secondary)
+            
+            VStack(alignment: .leading, spacing: 16) {
+                ForEach(items, id: \.self) { item in
+                    HStack(alignment: .top, spacing: 12) {
+                        Text("•")
+                            .foregroundStyle(.secondary)
+                        Text(item)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+            }
+            
+            Spacer()
+        }
+        .padding(24)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text(title)
+                    .font(.headline)
+            }
         }
     }
 }
