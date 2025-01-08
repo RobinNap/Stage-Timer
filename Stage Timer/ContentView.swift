@@ -13,6 +13,8 @@ import AppKit
 
 import SwiftUI
 import MessageUI
+import StoreKit
+import Combine
 
 struct ContentView: View {
     @State private var timeRemaining: TimeInterval = 45 * 60
@@ -336,6 +338,8 @@ struct TimerSettingsView: View {
     @State private var showingMailView = false
     @State private var showingMailError = false
     @State private var showingDonateView = false
+    @State private var settingsViewTimer: Timer.TimerPublisher = Timer.publish(every: 5, on: .main, in: .common)
+    @State private var settingsViewTimerCancellable: Cancellable?
     
     init(initialTime: Binding<TimeInterval>,
          timeRemaining: Binding<TimeInterval>,
@@ -501,7 +505,7 @@ struct TimerSettingsView: View {
                     }
                 }
             }
-            .navigationTitle("Information")
+            .navigationTitle("Settings")
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
@@ -525,6 +529,28 @@ struct TimerSettingsView: View {
             .frame(minHeight: 400, idealHeight: 500, maxHeight: .infinity)
             .padding()
             #endif
+            .onAppear {
+                // Start the timer when the view appears
+                settingsViewTimerCancellable = settingsViewTimer.connect()
+            }
+            .onDisappear {
+                // Cancel the timer when the view disappears
+                settingsViewTimerCancellable?.cancel()
+            }
+            .onReceive(settingsViewTimer) { _ in
+                // Request review after 5 seconds
+                if #available(iOS 18.0, *) {
+                    if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                        AppStore.requestReview(in: scene)
+                    }
+                } else {
+                    if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                        SKStoreReviewController.requestReview(in: scene)
+                    }
+                }
+                // Cancel the timer after requesting review
+                settingsViewTimerCancellable?.cancel()
+            }
         }
         #if os(macOS)
         .frame(minWidth: 500, minHeight: 400)
