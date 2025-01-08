@@ -12,6 +12,7 @@ import AppKit
 #endif
 
 import SwiftUI
+import MessageUI
 
 struct ContentView: View {
     @State private var timeRemaining: TimeInterval = 45 * 60
@@ -332,6 +333,8 @@ struct TimerSettingsView: View {
     @State private var showingScheduleEditor = false
     @ObservedObject var calendarManager: CalendarManager
     @State private var calendarSyncEnabled: Bool
+    @State private var showingMailView = false
+    @State private var showingMailError = false
     
     init(initialTime: Binding<TimeInterval>,
          timeRemaining: Binding<TimeInterval>,
@@ -431,6 +434,31 @@ struct TimerSettingsView: View {
                             ]
                         )
                     }
+                }
+                
+                Section {
+                    Button(action: {
+                        let email = "support@lumonlabs.io"
+                        if let url = URL(string: "mailto:\(email)") {
+                            if UIApplication.shared.canOpenURL(url) {
+                                UIApplication.shared.open(url)
+                            } else {
+                                showingMailError = true
+                            }
+                        }
+                    }) {
+                        HStack {
+                            Text("Contact Support")
+                            Spacer()
+                            Image(systemName: "envelope.fill")
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+                .alert("Cannot Open Mail", isPresented: $showingMailError) {
+                    Button("OK", role: .cancel) { }
+                } message: {
+                    Text("Please make sure you have an email client configured on your device.")
                 }
             }
             .navigationTitle("Settings")
