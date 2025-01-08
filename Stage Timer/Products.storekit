@@ -1,0 +1,137 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "com.robinnap.Stage-Timer",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : false,
+      "internalID" : "small.croissant",
+      "localizations" : [
+        {
+          "description" : "Support the developer with a small croissant",
+          "displayName" : "Small Croissant",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.robinnap.Stage-Timer.smallcroissant",
+      "referenceName" : "Small Croissant",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "two.croissants",
+      "localizations" : [
+        {
+          "description" : "Support the developer with two croissants",
+          "displayName" : "Two Croissants",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.robinnap.Stage-Timer.twocroissants",
+      "referenceName" : "Two Croissants",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "7.99",
+      "familyShareable" : false,
+      "internalID" : "croissant.jam",
+      "localizations" : [
+        {
+          "description" : "Support the developer",
+          "displayName" : "Croissant & Jam",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.robinnap.Stage-Timer.croissantjam",
+      "referenceName" : "Croissant & Jam",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "14.99",
+      "familyShareable" : false,
+      "internalID" : "breakfast",
+      "localizations" : [
+        {
+          "description" : "Support the developer",
+          "displayName" : "Breakfast",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.robinnap.Stage-Timer.breakfast",
+      "referenceName" : "Breakfast",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

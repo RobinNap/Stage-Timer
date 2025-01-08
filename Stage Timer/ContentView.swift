@@ -335,6 +335,7 @@ struct TimerSettingsView: View {
     @State private var calendarSyncEnabled: Bool
     @State private var showingMailView = false
     @State private var showingMailError = false
+    @State private var showingDonateView = false
     
     init(initialTime: Binding<TimeInterval>,
          timeRemaining: Binding<TimeInterval>,
@@ -367,23 +368,15 @@ struct TimerSettingsView: View {
                     }
                 }
                 
-                if calendarSyncEnabled {
-                    Section {
-                        Button("Custom Schedule") {
-                            showingScheduleEditor = true
-                        }
-                        .disabled(calendarSyncEnabled) // Disable manual editing when sync is on
+                Section {
+                    Button("Custom Schedule") {
+                        showingScheduleEditor = true
                     }
-                } else {
-                    Section {
-                        Button("Custom Schedule") {
-                            showingScheduleEditor = true
-                        }
-                    }
+                    .disabled(calendarSyncEnabled) // Disable manual editing when sync is on
                 }
                 
-                Section("Manual") {
-                    NavigationLink("Controls") {
+                Section("FEATURES") {
+                    NavigationLink {
                         ManualDetailView(
                             title: "Controls",
                             description: "The large center area is your main control surface.",
@@ -394,9 +387,17 @@ struct TimerSettingsView: View {
                                 "Double tap to reset the timer"
                             ]
                         )
+                    } label: {
+                        VStack(alignment: .leading) {
+                            Text("Controls")
+                                .foregroundStyle(.blue)
+                            Text("Tap to learn more")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
                     }
                     
-                    NavigationLink("Calendar Integration") {
+                    NavigationLink {
                         ManualDetailView(
                             title: "Calendar Integration",
                             description: "Sync your schedule with your calendar.",
@@ -407,9 +408,17 @@ struct TimerSettingsView: View {
                                 "Events can include images from calendar attachments"
                             ]
                         )
+                    } label: {
+                        VStack(alignment: .leading) {
+                            Text("Calendar Integration")
+                                .foregroundStyle(.blue)
+                            Text("Tap to learn more")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
                     }
                     
-                    NavigationLink("Custom Schedule") {
+                    NavigationLink {
                         ManualDetailView(
                             title: "Custom Schedule",
                             description: "Create and manage your own event schedule.",
@@ -420,9 +429,17 @@ struct TimerSettingsView: View {
                                 "Use 'Start Now' for immediate timing"
                             ]
                         )
+                    } label: {
+                        VStack(alignment: .leading) {
+                            Text("Custom Schedule")
+                                .foregroundStyle(.blue)
+                            Text("Tap to learn more")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
                     }
                     
-                    NavigationLink("Timer Behavior") {
+                    NavigationLink {
                         ManualDetailView(
                             title: "Timer Behavior",
                             description: "Understanding how the timer works.",
@@ -433,6 +450,34 @@ struct TimerSettingsView: View {
                                 "Screen stays active during operation"
                             ]
                         )
+                    } label: {
+                        VStack(alignment: .leading) {
+                            Text("Timer Behavior")
+                                .foregroundStyle(.blue)
+                            Text("Tap to learn more")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+                
+                Section {
+                    NavigationLink {
+                        DonateView()
+                    } label: {
+                        HStack {
+                            Image(systemName: "heart.fill")
+                                .foregroundStyle(.red)
+                            VStack(alignment: .leading) {
+                                Text("Support Development")
+                                Text("Buy me a croissant")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            Text("🥐")
+                                .font(.title3)
+                        }
                     }
                 }
                 
@@ -448,20 +493,15 @@ struct TimerSettingsView: View {
                         }
                     }) {
                         HStack {
-                            Text("Contact Support")
-                            Spacer()
                             Image(systemName: "envelope.fill")
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(.blue)
+                            Text("Contact Support")
+                                .foregroundStyle(.blue)
                         }
                     }
                 }
-                .alert("Cannot Open Mail", isPresented: $showingMailError) {
-                    Button("OK", role: .cancel) { }
-                } message: {
-                    Text("Please make sure you have an email client configured on your device.")
-                }
             }
-            .navigationTitle("Settings")
+            .navigationTitle("Information")
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
@@ -714,6 +754,84 @@ struct ManualDetailView: View {
                 Text(title)
                     .font(.headline)
             }
+        }
+    }
+}
+
+struct DonateView: View {
+    @StateObject private var storeManager = StoreManager.shared
+    @State private var errorMessage: String?
+    @State private var showingError = false
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 24) {
+            Text("Support the Developer")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding(.bottom, 4)
+            
+            Text("Stage Timer is developed by an independent developer. Your support helps keep the app running and enables new features!")
+                .font(.title3)
+                .foregroundStyle(.secondary)
+            
+            VStack(spacing: 16) {
+                ForEach(storeManager.products) { product in
+                    Button(action: {
+                        Task {
+                            do {
+                                try await storeManager.purchase(product)
+                            } catch StoreError.userCancelled {
+                                // User cancelled, no need to show error
+                            } catch {
+                                errorMessage = error.localizedDescription
+                                showingError = true
+                            }
+                        }
+                    }) {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(product.displayName)
+                                    .font(.headline)
+                                Text(getEmojiForProduct(product.id))
+                                    .font(.title2)
+                            }
+                            
+                            Spacer()
+                            
+                            Text(product.displayPrice)
+                                .font(.headline)
+                                .foregroundStyle(.blue)
+                        }
+                        .padding()
+                        .background(Color(UIColor.secondarySystemBackground))
+                        .cornerRadius(12)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            
+            Spacer()
+            
+            Text("Thank you for your support! ❤️")
+                .frame(maxWidth: .infinity)
+                .foregroundStyle(.secondary)
+        }
+        .padding(24)
+        .navigationBarTitleDisplayMode(.inline)
+        .alert("Purchase Error", isPresented: $showingError) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(errorMessage ?? "An unknown error occurred")
+        }
+    }
+    
+    private func getEmojiForProduct(_ productID: String) -> String {
+        switch productID {
+        case "com.robinnap.Stage-Timer.smallcroissant": return "🥐"
+        case "com.robinnap.Stage-Timer.twocroissants": return "🥐🥐"
+        case "com.robinnap.Stage-Timer.croissantjam": return "🥐🍓"
+        case "com.robinnap.Stage-Timer.breakfast": return "🥐🥛"
+        default: return "🥐"
         }
     }
 }
